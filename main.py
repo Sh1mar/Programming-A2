@@ -8,34 +8,22 @@ Method to update and edit properties like same with deletign the records
 rentalProperty_Objects : list = []
 
 #MARK: Enter Rentals
-def enterRentals():
-
-   while True: 
-      rentalType = int(input("Enter the Type of Rental Property: \n[1]Whole Rental Property \n[2]Room Rental Property\n"))
-      if rentalType == 1 or rentalType == 2: 
-         break
-      else: 
-         print("Invalid Input Please Try Again!")
+def enterRentals(rentalType : int) -> None:
    
-   if rentalType == 1: 
-     
-      rental_ID = input("Enter rental ID: ")
-      address = str(input("Enter address: "))
-      weeklyPrice = float(input("Enter weekly price: "))
-      furnished = input("Is the property furnished? (True/False): ").lower() == 'true'
-      description = input("Enter property description: ")
+   rental_ID = input("Enter rental ID: ")
+   address = str(input("Enter address: "))
+   weeklyPrice = float(input("Enter weekly price: "))
+   furnished = input("Is the property furnished? (True/False): ").lower() == 'true'
+   description = input("Enter property description: ")
+
+   if rentalType == 1:
       noofRooms = int(input("Enter number of rooms: "))
       garageSpace = int(input("Enter garage space (if any): "))
       petsAllowed = input("Are pets allowed? (True/False): ").lower() == 'true'
-      
+
       rentalProperty_Objects.append(["WholeRental" ,WholeRental(rental_ID,address,weeklyPrice,furnished,description,noofRooms,garageSpace,petsAllowed)])
    
-   else:
-      rental_ID = input("Enter rental ID: ")
-      address = str(input("Enter address: "))
-      weeklyPrice = float(input("Enter weekly price: "))
-      furnished = input("Is the property furnished? (True/False): ").lower() == "true"
-      description = input("Enter property description: ")
+   else: 
       couplesAllowed = input("Are couples Allowed? (True/False): ").lower() == "true"
       attachedBathroom = input("Is there a Attached Bathroom? (True/False): ").lower() == "true"
 
@@ -43,26 +31,25 @@ def enterRentals():
 
 #MARK: Retreive Rentals 
 def retreiveRentals(rentalType : int) -> str: 
-   
+
    rentalInfo = ""
+   for rentals in rentalProperty_Objects:
+      
+      if rentalType == 1 and rentals[0] == "WholeRental" : 
+            rentalInfo += rentals[1].displayRental() + "\n"
+           
+      if rentalType == 2 and rentals[0] == "RoomRental" : 
+            rentalInfo += rentals[1].displayRental() + "\n"
 
-   for index in range(len(rentalProperty_Objects)):
-      
-      if rentalType == 1: 
-         if rentalProperty_Objects[index][0] == "WholeRental":
-            rentalInfo  = rentalProperty_Objects[index][1].displayRental()
-      
-      if rentalType == 2:
-         if rentalProperty_Objects[index][0] == "RoomRental":
-            rentalInfo  = rentalProperty_Objects[index][1].displayRental()
-      
-      if rentalType == 3:
-         print("All Rental Properties") 
-         rentalInfo = rentalProperty_Objects[index][1].displayRental()
+      if rentalType == 3: 
+         rentalInfo += rentals[1].displayRental() + "\n"
+   
+   return rentalInfo 
 
-   return rentalInfo
       
 #MARK: Edit and Update Details of Rental Properties 
+def updateRentals(rental_ID : int, update_element, ): 
+   pass 
 
 
 
@@ -88,6 +75,35 @@ def deleteRentals(rentalid : int):
 
 #MARK: Main
 def main(): 
+
+   #Test Cases 
+
+   # Create an instance of WholeRental
+   whole_rental = WholeRental(
+      rental_ID="WR001",
+      address="123 Main St",
+      weeklyPrice=500.0,
+      furnished=True,
+      description="A spacious whole rental",
+      noofRooms=3,
+      garageSpace=2,
+      petsAllowed=True
+   )
+
+   # Create an instance of RoomRental
+   room_rental = RoomRental(
+      rental_ID="RR001",
+      address="456 Elm St",
+      weeklyPrice=300.0,
+      furnished=False,
+      description="A cozy room rental",
+      couplesAllowed=True,
+      attachedBathroom=True
+   )
+
+   rentalProperty_Objects.append(["WholeRental",whole_rental])
+   rentalProperty_Objects.append(["RoomRental",room_rental])
+   
    while True: 
       print(" \n ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ")
       print("             Student Accommodation Monash (SAM)             " ) 
@@ -103,11 +119,18 @@ def main():
 
       match userChoice:
          case 1: 
-            enterRentals()
-            print(rentalProperty_Objects)
-        
-         case 2: 
             
+            while True: 
+               rentalType = int(input("Enter the Type of Rental Property: \n[1]Whole Rental Property \n[2]Room Rental Property\n"))
+               if rentalType == 1 or rentalType == 2: 
+                  break
+               else: 
+                  print("Invalid Input Please Try Again!")
+
+            enterRentals(rentalType)
+               
+         case 2: 
+
             if len(rentalProperty_Objects) == 0:
                print("No Rental Propertires Created!")
             else:
@@ -117,11 +140,24 @@ def main():
                      break
                   else: 
                      print("Invalid Input Please Try Again!")
-               
+                  
                print(retreiveRentals(rentalType))
+               
          
-         case 3: 
-            pass 
+         case 3:
+
+            #User input to determine what type of property is to be edited/updated 
+            while True: 
+               rentalType = int(input("Enter the Type of Rentals do be updated/edited: \n[1]Whole Rental Property \n[2]Room Rental Property\n"))
+               if rentalType == 1 or rentalType == 2: 
+                  break
+               else: 
+                  print("Invalid Input Please Try Again!")
+            
+            print("These are the Existing Rental Properties and their IDs \n")
+            for index in range(len(rentalProperty_Objects)): 
+               print(f" Rental Type :  {rentalProperty_Objects[index][0]} Rental ID : {rentalProperty_Objects[index][1].getRental_ID()}") 
+            
 
          case 4 : 
             pass 
