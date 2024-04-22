@@ -8,8 +8,13 @@ class RentalProperty:
       self.furnished : bool  = furnished
       self.description :str = description
    
+   def getRental_ID(self):
+      return self.rental_ID
+
    def displayRoom(self):
       return None
+   
+
 
 class WholeRental(RentalProperty): 
    def __init__(self,rental_ID,address,weeklyPrice,furnished,description,noofRooms,garageSpace,petsAllowed):
