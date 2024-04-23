@@ -8,24 +8,25 @@ class RentalProperty:
       self.furnished : bool  = furnished
       self.description :str = description
    
-   #Setter Functions 
+   #Setter Functions - Assume that RentalID cannot be changed after being set 
 
-   def setAddress(self, newAddress):
+   def set_Address(self, newAddress):
       self.address = newAddress
 
-   def setWeeklyPrice(self, newPrice):
+   def set_WeeklyPrice(self, newPrice):
       self.weeklyPrice = newPrice
 
-   def setFurnished(self, newFurnished):
+   def set_Furnished(self, newFurnished):
       self.furnished = newFurnished
 
-   def setDescription(self, newDescription):
+   def set_Description(self, newDescription):
       self.description = newDescription
 
    #Getter Functions
-   def getRental_ID(self):
+   def get_Rental_ID(self):
       return self.rental_ID
 
+   #Display Rentals 
    def displayRoom(self):
       return None
    
@@ -36,6 +37,19 @@ class WholeRental(RentalProperty):
       self.garageSpace : int = garageSpace
       self.petsAllowed : bool = petsAllowed
 
+   #Setters 
+
+   def set_NoOfRooms(self,newNoOfRooms):
+      self.noofRooms = newNoOfRooms
+   
+   def set_Garagespace(self,newGarageSpace):
+       self.garageSpace = newGarageSpace
+   
+   def set_Petsallowed(self,newPetsallowed):
+      self.petsAllowed = newPetsallowed
+
+   #Getters
+   #Displays Rentals 
    def displayRental(self):
       return f"Rental ID : {self.rental_ID} \nAddress :{self.address} \nWeeklyPrice : {self.weeklyPrice} \nFurnished : {self.furnished} \nDescription : {self.description} \nNumber of Rooms : {self.noofRooms} \nGarage Space : {self.garageSpace} \nPets Allowed : {self.petsAllowed} \n"
 
@@ -48,8 +62,15 @@ class RoomRental(RentalProperty):
       self.couplesAllowed : bool  = couplesAllowed
       self.attachedBathroom : bool = attachedBathroom
 
+   #Setters 
+   def set_Couplesallowed(self,newCouplesAllowed):
+      self.couplesAllowed = newCouplesAllowed
+
+   def set_Attachbathroom(self,newAttachBathrooms):
+      self.attachedBathroom = newAttachBathrooms
+
    def displayRental(self):
-      return f"Rental ID : {self.rental_ID} \nAddress :{self.address} \nWeeklyPrice : {self.weeklyPrice} \nFurnished : {self.furnished} \nDescription : {self.description} \nCouples Allowed : {self.couplesAllowed} \nAttached Bathroom : {self.attachedBathroom} \n"
+      return f"Rental ID : {self.rental_ID} \nAddress :{self.address} \nWeeklyPrice : {self.weeklyPrice} \nFurnished : {self.furnished} \nDescription : {self.description} \nCouples Allowed : {self.couplesAllowed} \nAttached Bathroom : {self.attachedBathroom}"
 
    def __del__(self):
        print(f"Room Rental : {self.rental_ID} Deleted \n")
