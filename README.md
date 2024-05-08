@@ -16,8 +16,7 @@ Polmorphism in your code
    ○ ~~The object created will be dependent on the type of rental property selected.~~
       i.e. if the user selected “Room Rental”, then a RoomRental object should be created instead of a WholeRental object.
 
-   ○ You will also use this reference variable when updating and displaying the
-   rental property.
+   ○ You will also use this reference variable when updating and displaying the rental property.
 
    ○ ~~You will need to use a Data Structure (list of lists) of Rental objects to store all the rental properties.~~
 
@@ -35,6 +34,5 @@ Polmorphism in your code
    ○ Loop structure: what happens during each iteration of the loop when with the loop end
 
    MCD4710 - Introduction to Programming
-      ○ Other code sections that need additional explanation should include
-      comments as well.
+      ○ Other code sections that need additional explanation should include comments as well.
       ● Use of good programming practices such as meaningful names, decomposition etc.
