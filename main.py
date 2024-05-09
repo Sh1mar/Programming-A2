@@ -70,7 +70,6 @@ def validateRental(search_ID: str) -> int:
 
     return False
 
-
 # Checks the Type of Rental Property input by the user
 def checkRental_Type(search_ID: str) -> str:
     for [rental_type, property_object] in rentalProperty_Objects:
@@ -130,13 +129,13 @@ def deleteRentals(rentalID: int, rentalType: str) -> None:
             1].get_Rental_ID() == rentalID:
             rentalProperty_Objects.pop(index)
 
-        # MARK: Display
+# MARK: Display
 
-# TEXT FILE HANDLING
+#MARK: TEXT FILE HANDLING
 
 # Load existing data from text file, makes rental property objects and appends then to the list
-def load():
-    file = open("rentalProperties.txt", "r")
+def loadRentals():
+    file = open("Programming-A2/rentalProperties.txt", "r")
 
     lines = file.readlines()
 
@@ -146,25 +145,23 @@ def load():
         rental_data = line.split(",")
         rental_ID = rental_data[0]
 
+        # print(rental_data,len(rental_data))
+
         # Adds the property from the text file to the objects list by creating an oject ONLY if it doesnt already exist
         if not(validateRental(rental_ID)):
+
             # Whole rental
             if len(rental_data) == 8:
                 rental_ID, address, weeklyPrice, furnished, description, noofRooms, garageSpace, petsAllowed = rental_data
                 rentalProperty_Objects.append(["WholeRental", WholeRental(rental_ID, address, weeklyPrice, furnished, description, noofRooms, garageSpace, petsAllowed)])
-
             # Room rental
             else:
                 rental_ID, address, weeklyPrice, furnished, description, couplesAllowed, attachedBathroom = rental_data
                 rentalProperty_Objects.append(["RoomRental", RoomRental(rental_ID, address, weeklyPrice, furnished, description, couplesAllowed, attachedBathroom)])
-
-        print(rental_data)
-
-
     file.close()
 
 # MARK: Backs up any change to the rental property object list onto the text file after any user action
-def backup():
+def backupRentals():
     file = open("rentalProperties.txt", "w")
     new_property_text = ""
 
@@ -178,10 +175,7 @@ def backup():
         else:
             new_property_text += f"{property_object.get_noofrooms()},{property_object.get_garage_space()},{property_object.pets_allowed()}\n"
 
-        print(new_property_text)
-
     file.write(new_property_text)
-
     file.close()
 
 # MARK : Test Cases
@@ -214,14 +208,15 @@ def Testcases():
     rentalProperty_Objects.append(["WholeRental", whole_rental])
     rentalProperty_Objects.append(["RoomRental", room_rental])
 
-
 # MARK: Main
 def main():
     #Testcases()
-
+ 
+    loadRentals()
+    print(" \nLoading Rentals from your last sessions Press [5] to display existing Rental Properties \n")
+       
     while True:
-        load()
-
+    
         print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ")
         print("             Student Accommodation Monash (SAM)              ")
         print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
@@ -238,6 +233,7 @@ def main():
             except ValueError:
                 print("Invalid input! Please enter a valid integer.")
 
+
         match userChoice:
             # Enter Rental Property Details
             case 1:
@@ -245,12 +241,11 @@ def main():
                 while True:
                     rentalType = int(input(
                         "Enter the Type of Rental Property: \n[1]Whole Rental Property \n[2]Room Rental Property\n"))
-                    if rentalType == 1 or rentalType == 2:
+                    if rentalType == 1 or rentalType == 2 or rentalType == 3:
+                        enterRentals(rentalType)
                         break
                     else:
                         print("Invalid Input Please Try Again!")
-
-                enterRentals(rentalType)
 
             # Retrieve details of Rental Properties
             case 2:
@@ -262,11 +257,10 @@ def main():
                         print("[1]Whole Rental Property \n[2]Room Rental Property\n[3]All Rental Properties \n")
                         rentalType = int(input("Enter the Type of Rentals do be Retreived:"))
                         if rentalType == 1 or rentalType == 2 or rentalType == 3:
+                            print(retreiveRentals(rentalType))
                             break
                         else:
                             print("Invalid Input Please Try Again!")
-
-                    print(retreiveRentals(rentalType))
 
             # Edit and Update details of Rental Properties
             case 3:
@@ -353,7 +347,11 @@ def main():
                     print(f"{rentalType} with ID: {searchRental} has been successfully Deleted!")
 
             case 5:
-                pass
+
+                if len(rentalProperty_Objects) == 0:
+                    print("No Rental Propertires Created! \nPlease Enter Rental Property Details")
+                else:
+                    print(retreiveRentals(3))
 
             case 6:
                 pass
@@ -369,7 +367,7 @@ def main():
             case _:
                 print("Invalid action, try again.")
 
-        backup()
+        backupRentals()
 
 
 if __name__ == "__main__":

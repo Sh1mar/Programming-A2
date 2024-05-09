@@ -1,4 +1,5 @@
 # Setter, Getter, Constructor Deconstructor
+from abc import ABC, abstractmethod
 
 class RentalProperty:
     def __init__(self, rental_ID, address, weeklyPrice, furnished, description):
@@ -39,9 +40,9 @@ class RentalProperty:
         return self.description
 
     # Display Rentals
+    @abstractmethod
     def displayRoom(self):
-        return None
-
+        pass 
 
 class WholeRental(RentalProperty):
     def __init__(self, rental_ID, address, weeklyPrice, furnished, description, noofRooms, garageSpace, petsAllowed):
@@ -64,7 +65,7 @@ class WholeRental(RentalProperty):
     # Getters
     # Displays Rentals
     def displayRental(self):
-        return f"Rental ID : {self.rental_ID} \nAddress :{self.address} \nWeeklyPrice : {self.weeklyPrice} \nFurnished : {self.furnished} \nDescription : {self.description} \nNumber of Rooms : {self.noofRooms} \nGarage Space : {self.garageSpace} \nPets Allowed : {self.petsAllowed} \n"
+        return f"Rental ID : {self.rental_ID} \nAddress :{self.address} \nWeeklyPrice : {self.weeklyPrice} \nFurnished : {self.furnished} \nDescription : {self.description} \nNumber of Rooms : {self.noofRooms} \nGarage Space : {self.garageSpace} \nPets Allowed : {self.petsAllowed} \n "
 
     # Destructor
     def __del__(self):
@@ -94,7 +95,7 @@ class RoomRental(RentalProperty):
         self.attachedBathroom = newAttachBathrooms
 
     def displayRental(self):
-        return f"Rental ID : {self.rental_ID} \nAddress :{self.address} \nWeeklyPrice : {self.weeklyPrice} \nFurnished : {self.furnished} \nDescription : {self.description} \nCouples Allowed : {self.couplesAllowed} \nAttached Bathroom : {self.attachedBathroom}"
+        return f"Rental ID : {self.rental_ID} \nAddress :{self.address} \nWeeklyPrice : {self.weeklyPrice} \nFurnished : {self.furnished} \nDescription : {self.description} \nCouples Allowed : {self.couplesAllowed} \nAttached Bathroom : {self.attachedBathroom} \n "
 
     # Destructor
     def __del__(self):
