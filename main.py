@@ -4,10 +4,6 @@ from rentalClass import *
 TODO:
 
 Option to go back  
-
-#Questions 
-Do we have to generate the Rental ID ourselves? 
-ID Validation by Searching 
 """
 
 rentalProperty_Objects = []
