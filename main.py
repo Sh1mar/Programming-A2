@@ -8,18 +8,27 @@ Option to go back
 #Questions 
 Do we have to generate the Rental ID ourselves? 
 
+
+
 """
 
 rentalProperty_Objects = []
 
 """
 Purpose: 
-- Takes the rental type as an argument
-- Takes user input of the attributes of the rental property
-- Creates WholeRental or RoomRental object (based on rentalType argument)
-- Appends object to a list storing all rental property objects
+    - Takes the rental type as an argument
+    - Takes user input of the attributes of the rental property
+    - Creates WholeRental or RoomRental object (based on rentalType argument)
+    - Appends object to a list storing all rental property objects
 
+Args:
+    rentalType : int - xyz
+
+Returns:
+    None
 """
+
+# MARK: Enter Retnals 
 def enterRentals(rentalType: int) -> None:
     rental_ID = input("Enter rental ID: ")
     address = str(input("Enter address: "))
@@ -44,8 +53,15 @@ def enterRentals(rentalType: int) -> None:
 
 """
 Purpose: 
-- 
+    -
+
+Args:
+    rentalType : int - xyz
+
+Returns:
+    str :  returns a string of rentalType class properties
 """
+# MARK: Retrieve Rentals 
 def retreiveRentals(rentalType: int) -> str:
     rentalInfo = ""
     for rentals in rentalProperty_Objects:
@@ -61,7 +77,27 @@ def retreiveRentals(rentalType: int) -> str:
     return rentalInfo
 
 """
-Validates user Rental_ID when editing and updating properties
+Purpose: 
+    -Validates user Rental_ID when editing and updating properties
+
+Args:
+    rentalType : accepts a integer value 
+
+Returns:
+    str :   returns a string of rentalType class properties
+"""
+
+# MARK: Utility Functions 
+
+
+"""
+Purpose: 
+    -
+Args:
+    search_ID : str 
+
+Returns:
+    bool:   xyz
 """
 def validateRental(search_ID: str) -> int:
     for index in range(len(rentalProperty_Objects)):
@@ -69,7 +105,15 @@ def validateRental(search_ID: str) -> int:
             return True
 
     return False
+"""
+Purpose: 
+    -
+Args:
+    search_ID : str  - xyz
 
+Returns:
+    Rental : str - xyz
+"""
 # Checks the Type of Rental Property input by the user
 def checkRental_Type(search_ID: str) -> str:
     for [rental_type, property_object] in rentalProperty_Objects:
@@ -77,8 +121,19 @@ def checkRental_Type(search_ID: str) -> str:
         if rental_ID == search_ID:
             return rental_type
 
+# MARK: Update Rentals
 
-# Edits/Updates Rental Properties Objects Accordindly and validates the Feild
+"""
+Purpose: 
+    -Edits/Updates Rental Properties Objects Accordindly and validates the Feild
+Args:
+    reantalType : str  - 
+    rentalSearch_ID : int - 
+    feildChange : int -  
+
+Returns:
+    None
+"""
 def updateRentals(rentalType: str, Rentalsearch_ID: int, feildChange: int) -> None:
     for index, rentals in enumerate(rentalProperty_Objects):
         if rentals[1].get_Rental_ID() == Rentalsearch_ID and rentals[0] == rentalType:
@@ -123,17 +178,34 @@ def updateRentals(rentalType: str, Rentalsearch_ID: int, feildChange: int) -> No
 
 
 # MARK: Delete Rentals
+"""
+Purpose: 
+    -
+Args:
+    rentalID: int - 
+    rentalType: str -  
+
+Returns:
+    None 
+"""
 def deleteRentals(rentalID: int, rentalType: str) -> None:
     for index in range(len(rentalProperty_Objects)):
         if rentalProperty_Objects[index][0] == rentalType and rentalProperty_Objects[index][
             1].get_Rental_ID() == rentalID:
             rentalProperty_Objects.pop(index)
 
-# MARK: Display
+# MARK: Load Back UP 
 
-#MARK: TEXT FILE HANDLING
+"""
+Purpose: 
+    -Load existing data from text file, makes rental property objects and appends then to the list
 
-# Load existing data from text file, makes rental property objects and appends then to the list
+Args: 
+    None
+
+Returns:
+    None 
+"""
 def loadRentals():
     file = open("Programming-A2/rentalProperties.txt", "r")
 
@@ -160,9 +232,20 @@ def loadRentals():
                 rentalProperty_Objects.append(["RoomRental", RoomRental(rental_ID, address, weeklyPrice, furnished, description, couplesAllowed, attachedBathroom)])
     file.close()
 
-# MARK: Backs up any change to the rental property object list onto the text file after any user action
+# MARK: Back Up
+"""
+Purpose: 
+    -Load existing data from text file, makes rental property objects and appends then to the list
+
+Args: 
+    None
+
+Returns:
+    None 
+"""
+
 def backupRentals():
-    file = open("rentalProperties.txt", "w")
+    file = open("Programming-A2/rentalProperties.txt", "w")
     new_property_text = ""
 
     for property in rentalProperty_Objects:
@@ -178,7 +261,7 @@ def backupRentals():
     file.write(new_property_text)
     file.close()
 
-# MARK : Test Cases
+#Test Cases Delete during Submission
 def Testcases():
     # Test Cases
 
@@ -208,7 +291,17 @@ def Testcases():
     rentalProperty_Objects.append(["WholeRental", whole_rental])
     rentalProperty_Objects.append(["RoomRental", room_rental])
 
+
 # MARK: Main
+"""
+Purpose: 
+    -
+Args: 
+    None
+
+Returns:
+    None 
+"""
 def main():
     #Testcases()
  
@@ -354,7 +447,9 @@ def main():
                     print(retreiveRentals(3))
 
             case 6:
-                pass
+                print("Backing Up Rentals...")
+                backupRentals()
+                print("Back up Successfully Created!")
 
             case 7:
                 while True:
