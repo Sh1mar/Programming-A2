@@ -69,36 +69,12 @@ def retreiveRentals(rentalType: int) -> str:
 
     return rentalInfo
 
-
-"""
-Purpose: 
-    -Checks each ID with all the other IDs to see if a duplicate exists or not 
-
-Args:
-    None 
-
-Returns:
-    tuple[int,int]: 
-"""
-
-
-"""
-Purpose: 
-    -Validates user Rental_ID when editing and updating properties
-
-Args:
-    rentalType : accepts a integer value 
-
-Returns:
-    str :   returns a string of rentalType class properties
-"""
-
 # MARK: Update Rentals
 """
 Purpose: 
     -Edits/Updates Rental Properties Objects Accordindly and validates the Feild
 Args:
-    reantalType : str  - 
+    rentalType : str  - 
     rentalSearch_ID : int - 
     feildChange : int -  
 
@@ -213,7 +189,6 @@ Args:
 Returns:
     None 
 """
-
 def backupRentals():
     file = open("Programming-A2/rentalProperties.txt", "w")
     new_property_text = ""
@@ -247,14 +222,17 @@ def validateRental(search_ID: str) -> int:
             return True
 
     return False
+
 """
 Purpose: 
-    -
+    -Validates user Rental_ID when editing and updating properties
+
 Args:
-    search_ID : str  - xyz
+    rentalType : accepts a integer value 
 
 Returns:
-    Rental : str - xyz
+    str :   returns a string of rentalType class properties
+
 """
 # Checks the Type of Rental Property input by the user
 def checkRental_Type(search_ID: str) -> str:
