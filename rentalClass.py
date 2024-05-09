@@ -11,6 +11,9 @@ class RentalProperty:
 
     # Setter Functions - Assume that RentalID cannot be changed after being set
 
+    def set_RentalID(self,newRentalID):
+        self.rental_ID = newRentalID
+
     def set_Address(self, newAddress):
         self.address = newAddress
 

@@ -7,9 +7,7 @@ Option to go back
 
 #Questions 
 Do we have to generate the Rental ID ourselves? 
-
-
-
+ID Validation by Searching 
 """
 
 rentalProperty_Objects = []
@@ -22,14 +20,13 @@ Purpose:
     - Appends object to a list storing all rental property objects
 
 Args:
-    rentalType : int - xyz
+    rentalType : int
 
 Returns:
     None
 """
-
 # MARK: Enter Retnals 
-def enterRentals(rentalType: int) -> None:
+def enterRentals(rentalType: int) -> None:  
     rental_ID = input("Enter rental ID: ")
     address = str(input("Enter address: "))
     weeklyPrice = float(input("Enter weekly price: "))
@@ -76,6 +73,19 @@ def retreiveRentals(rentalType: int) -> str:
 
     return rentalInfo
 
+
+"""
+Purpose: 
+    -Checks each ID with all the other IDs to see if a duplicate exists or not 
+
+Args:
+    None 
+
+Returns:
+    tuple[int,int]: 
+"""
+
+
 """
 Purpose: 
     -Validates user Rental_ID when editing and updating properties
@@ -87,42 +97,7 @@ Returns:
     str :   returns a string of rentalType class properties
 """
 
-# MARK: Utility Functions 
-
-
-"""
-Purpose: 
-    -
-Args:
-    search_ID : str 
-
-Returns:
-    bool:   xyz
-"""
-def validateRental(search_ID: str) -> int:
-    for index in range(len(rentalProperty_Objects)):
-        if search_ID == rentalProperty_Objects[index][1].get_Rental_ID():
-            return True
-
-    return False
-"""
-Purpose: 
-    -
-Args:
-    search_ID : str  - xyz
-
-Returns:
-    Rental : str - xyz
-"""
-# Checks the Type of Rental Property input by the user
-def checkRental_Type(search_ID: str) -> str:
-    for [rental_type, property_object] in rentalProperty_Objects:
-        rental_ID = property_object.get_Rental_ID()
-        if rental_ID == search_ID:
-            return rental_type
-
 # MARK: Update Rentals
-
 """
 Purpose: 
     -Edits/Updates Rental Properties Objects Accordindly and validates the Feild
@@ -195,7 +170,6 @@ def deleteRentals(rentalID: int, rentalType: str) -> None:
             rentalProperty_Objects.pop(index)
 
 # MARK: Load Back UP 
-
 """
 Purpose: 
     -Load existing data from text file, makes rental property objects and appends then to the list
@@ -261,6 +235,54 @@ def backupRentals():
     file.write(new_property_text)
     file.close()
 
+# MARK: Utility Functions 
+"""
+Purpose: 
+    -
+Args:
+    search_ID : str 
+
+Returns:
+    bool:   xyz
+"""
+def validateRental(search_ID: str) -> int:
+    for index in range(len(rentalProperty_Objects)):
+        if search_ID == rentalProperty_Objects[index][1].get_Rental_ID():
+            return True
+
+    return False
+"""
+Purpose: 
+    -
+Args:
+    search_ID : str  - xyz
+
+Returns:
+    Rental : str - xyz
+"""
+# Checks the Type of Rental Property input by the user
+def checkRental_Type(search_ID: str) -> str:
+    for [rental_type, property_object] in rentalProperty_Objects:
+        rental_ID = property_object.get_Rental_ID()
+        if rental_ID == search_ID:
+            return rental_type
+
+"""
+Purpose: 
+    -
+Args: 
+    None
+
+Returns:
+    int : Returns the index of the second occurence of the duplicated Rental ID 
+"""
+def checkDuplicateRentals() -> bool:
+    
+    for index_i in range(len(rentalProperty_Objects)):
+        for index_j in range(len(rentalProperty_Objects)):
+            if rentalProperty_Objects[index_i][1].get_Rental_ID() == rentalProperty_Objects[index_j][1].get_Rental_ID() and index_i != index_j:
+                return index_j
+
 #Test Cases Delete during Submission
 def Testcases():
     # Test Cases
@@ -307,7 +329,9 @@ def main():
  
     loadRentals()
     print(" \nLoading Rentals from your last sessions Press [5] to display existing Rental Properties \n")
-       
+    print(rentalProperty_Objects)
+
+
     while True:
     
         print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ")
@@ -335,7 +359,17 @@ def main():
                     rentalType = int(input(
                         "Enter the Type of Rental Property: \n[1]Whole Rental Property \n[2]Room Rental Property\n"))
                     if rentalType == 1 or rentalType == 2 or rentalType == 3:
+                        
                         enterRentals(rentalType)
+                        
+                        duplicateID_index = checkDuplicateRentals()
+                        print(rentalProperty_Objects[duplicateID_index][1])
+                        
+                        if duplicateID_index != None: 
+                            print("\nWarning! : Duplicate ID detected in Rental Properties!")
+                            user_NewID = input("Enter new ID for Rental Property: ")
+                            rentalProperty_Objects[duplicateID_index][1].set_RentalID(user_NewID)
+                        
                         break
                     else:
                         print("Invalid Input Please Try Again!")
@@ -461,9 +495,6 @@ def main():
 
             case _:
                 print("Invalid action, try again.")
-
-        backupRentals()
-
 
 if __name__ == "__main__":
     main()
