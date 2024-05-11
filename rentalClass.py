@@ -54,6 +54,16 @@ class WholeRental(RentalProperty):
         self.garageSpace: int = garageSpace
         self.petsAllowed: bool = petsAllowed
 
+    # Getters
+    def get_noofrooms(self):
+        return self.noofRooms
+
+    def get_garage_space(self):
+        return self.garageSpace
+
+    def pets_allowed(self):
+        return self.petsAllowed
+
     # Setters
 
     def set_NoOfRooms(self, newNoOfRooms):
@@ -65,7 +75,6 @@ class WholeRental(RentalProperty):
     def set_Petsallowed(self, newPetsallowed):
         self.petsAllowed = newPetsallowed
 
-    # Getters
     # Displays Rentals
     def displayRental(self):
         return f"Rental ID : {self.rental_ID} \nAddress :{self.address} \nWeeklyPrice : {self.weeklyPrice} \nFurnished : {self.furnished} \nDescription : {self.description} \nNumber of Rooms : {self.noofRooms} \nGarage Space : {self.garageSpace} \nPets Allowed : {self.petsAllowed} \n "
@@ -74,21 +83,19 @@ class WholeRental(RentalProperty):
     def __del__(self):
         print(f"Whole Rental : {self.rental_ID} Deleted \n")
 
-    # Getters
-    def get_noofrooms(self):
-        return self.noofRooms
-
-    def get_garage_space(self):
-        return self.garageSpace
-
-    def pets_allowed(self):
-        return self.petsAllowed
 
 class RoomRental(RentalProperty):
     def __init__(self, rental_ID, address, weeklyPrice, furnished, description, couplesAllowed, attachedBathroom):
         super().__init__(rental_ID, address, weeklyPrice, furnished, description)
         self.couplesAllowed: bool = couplesAllowed
         self.attachedBathroom: bool = attachedBathroom
+
+    # Getters
+    def get_couples_allowed(self):
+        return self.couplesAllowed
+
+    def get_attached_bathroom(self):
+        return self.attachedBathroom
 
     # Setters
     def set_Couplesallowed(self, newCouplesAllowed):
@@ -97,6 +104,7 @@ class RoomRental(RentalProperty):
     def set_Attachbathroom(self, newAttachBathrooms):
         self.attachedBathroom = newAttachBathrooms
 
+    #Display Rentals 
     def displayRental(self):
         return f"Rental ID : {self.rental_ID} \nAddress :{self.address} \nWeeklyPrice : {self.weeklyPrice} \nFurnished : {self.furnished} \nDescription : {self.description} \nCouples Allowed : {self.couplesAllowed} \nAttached Bathroom : {self.attachedBathroom} \n "
 
@@ -104,9 +112,3 @@ class RoomRental(RentalProperty):
     def __del__(self):
         print(f"Room Rental : {self.rental_ID} Deleted \n")
 
-    # Getters
-    def get_couples_allowed(self):
-        return self.couplesAllowed
-
-    def get_attached_bathroom(self):
-        return self.attachedBathroom

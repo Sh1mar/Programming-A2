@@ -24,6 +24,7 @@ Returns:
 # MARK: Enter Retnals 
 def enterRentals(rentalType: int) -> None:  
     rental_ID = input("Enter rental ID: ")
+
     address = str(input("Enter address: "))
     weeklyPrice = float(input("Enter weekly price: "))
     furnished = input("Is the property furnished? (True/False): ").lower() == 'true'
@@ -141,7 +142,7 @@ def deleteRentals(rentalID: int, rentalType: str) -> None:
             1].get_Rental_ID() == rentalID:
             rentalProperty_Objects.pop(index)
 
-# MARK: Load Back UP 
+# MARK: Load Back Up
 """
 Purpose: 
     -Load existing data from text file, makes rental property objects and appends then to the list
@@ -337,8 +338,7 @@ def main():
                         enterRentals(rentalType)
                         
                         duplicateID_index = checkDuplicateRentals()
-                        print(rentalProperty_Objects[duplicateID_index][1])
-                        
+
                         if duplicateID_index != None: 
                             print("\nWarning! : Duplicate ID detected in Rental Properties!")
                             user_NewID = input("Enter new ID for Rental Property: ")
