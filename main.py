@@ -107,7 +107,7 @@ def updateRentals(rentalType: str, Rentalsearch_ID: int, feildChange: int) -> No
 
             elif feildChange == 6 and rentalType == "WholeRental":
                 new_GarageSpace = int(input("Enter garage space (if any): "))
-                rentals[1].set_Garagespace(new_GarageSpace)
+                rentals[1].set_garageSpace(new_GarageSpace)
 
             elif feildChange == 5 and rentalType == "RoomRental":
                 new_CouplesAllowed = input("Are couples Allowed? (True/False): ").lower() == "true"

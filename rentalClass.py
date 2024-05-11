@@ -69,8 +69,8 @@ class WholeRental(RentalProperty):
     def set_NoOfRooms(self, newNoOfRooms):
         self.noofRooms = newNoOfRooms
 
-    def set_Garagespace(self, newGarageSpace):
-        self.garageSpace = newGarageSpace
+    def set_garageSpace(self, newGaragespace):
+        self.garageSpace = newGaragespace
 
     def set_Petsallowed(self, newPetsallowed):
         self.petsAllowed = newPetsallowed
