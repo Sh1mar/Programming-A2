@@ -83,7 +83,7 @@ Returns:
     None
 """
 def updateRentals(rentalType: str, Rentalsearch_ID: int, feildChange: int) -> None:
-    for index, rentals in enumerate(rentalProperty_Objects):
+    for rentals in rentalProperty_Objects:
         if rentals[1].get_Rental_ID() == Rentalsearch_ID and rentals[0] == rentalType:
             if feildChange == 1:
                 new_Address = str(input("Enter New Address: "))
@@ -154,30 +154,37 @@ Returns:
     None 
 """
 def loadRentals():
-    file = open("Programming-A2/rentalProperties.txt", "r")
+    try: 
 
-    lines = file.readlines()
+        file = open("Programming-A2/rentalProperties.txt", "r")
 
-    for line in lines:
-        line = line.replace("\n", "")
+        lines = file.readlines()
 
-        rental_data = line.split(",")
-        rental_ID = rental_data[0]
+        for line in lines:
+            line = line.replace("\n", "")
 
-        # print(rental_data,len(rental_data))
+            rental_data = line.split(",")
+            rental_ID = rental_data[0]
 
-        # Adds the property from the text file to the objects list by creating an oject ONLY if it doesnt already exist
-        if not(validateRental(rental_ID)):
+            # print(rental_data,len(rental_data))
 
-            # Whole rental
-            if len(rental_data) == 8:
-                rental_ID, address, weeklyPrice, furnished, description, noofRooms, garageSpace, petsAllowed = rental_data
-                rentalProperty_Objects.append(["WholeRental", WholeRental(rental_ID, address, weeklyPrice, furnished, description, noofRooms, garageSpace, petsAllowed)])
-            # Room rental
-            else:
-                rental_ID, address, weeklyPrice, furnished, description, couplesAllowed, attachedBathroom = rental_data
-                rentalProperty_Objects.append(["RoomRental", RoomRental(rental_ID, address, weeklyPrice, furnished, description, couplesAllowed, attachedBathroom)])
-    file.close()
+            # Adds the property from the text file to the objects list by creating an oject ONLY if it doesnt already exist
+            if not(validateRental(rental_ID)):
+
+                # Whole rental
+                if len(rental_data) == 8:
+                    rental_ID, address, weeklyPrice, furnished, description, noofRooms, garageSpace, petsAllowed = rental_data
+                    rentalProperty_Objects.append(["WholeRental", WholeRental(rental_ID, address, weeklyPrice, furnished, description, noofRooms, garageSpace, petsAllowed)])
+                # Room rental
+                else:
+                    rental_ID, address, weeklyPrice, furnished, description, couplesAllowed, attachedBathroom = rental_data
+                    rentalProperty_Objects.append(["RoomRental", RoomRental(rental_ID, address, weeklyPrice, furnished, description, couplesAllowed, attachedBathroom)])
+        file.close()
+    except FileNotFoundError as fnfe: 
+        print(f"File not found! {fnfe}")
+    except Exception as e:
+        print("Unkown exception occured!")
+
 
 # MARK: Back Up
 """
@@ -191,21 +198,28 @@ Returns:
     None 
 """
 def backupRentals():
-    file = open("Programming-A2/rentalProperties.txt", "w")
-    new_property_text = ""
+    try: 
 
-    for property in rentalProperty_Objects:
-        property_type, property_object = property
+        file = open("Programming-A2/rentalProperties.txt", "w")
+        new_property_text = ""
 
-        new_property_text += f"{property_object.get_Rental_ID()},{property_object.get_address()},{property_object.get_weekly_price()},{property_object.get_furnished()},{property_object.get_description()},"
+        for property in rentalProperty_Objects:
+            property_type, property_object = property
 
-        if property_type == "RoomRental":
-            new_property_text += f"{property_object.get_couples_allowed()},{property_object.get_attached_bathroom()}\n"
-        else:
-            new_property_text += f"{property_object.get_noofrooms()},{property_object.get_garage_space()},{property_object.pets_allowed()}\n"
+            new_property_text += f"{property_object.get_Rental_ID()},{property_object.get_address()},{property_object.get_weekly_price()},{property_object.get_furnished()},{property_object.get_description()},"
 
-    file.write(new_property_text)
-    file.close()
+            if property_type == "RoomRental":
+                new_property_text += f"{property_object.get_couples_allowed()},{property_object.get_attached_bathroom()}\n"
+            else:
+                new_property_text += f"{property_object.get_noofrooms()},{property_object.get_garage_space()},{property_object.pets_allowed()}\n"
+
+        file.write(new_property_text)
+        file.close()
+        
+    except FileNotFoundError as fnfe: 
+        print(f"File not found! {fnfe}")
+    except Exception as e:
+        print("Unkown exception occured!")
 
 # MARK: Utility Functions 
 """
