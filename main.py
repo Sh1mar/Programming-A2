@@ -140,7 +140,7 @@ def updateRentals(rentalType: str, Rentalsearch_ID: int, feildChange: int) -> No
 
             elif feildChange == 5 and rentalType == "WholeRental":
                 new_NoofRooms = int(input("Enter number of rooms: "))
-                rentals[1].set_NoOfRooms(new_NoofRooms)
+                rentals[1].set_noofRooms(new_NoofRooms)
             
             elif feildChange == 6 and rentalType == "WholeRental":
                 new_NoofBathrooms= int(input("Enter number of Bathrooms: "))
@@ -271,7 +271,7 @@ def backupRentals():
                 if property_type == "RoomRental":
                     new_property_text += f"{property_object.get_couples_allowed()},{property_object.get_attached_bathroom()}\n"
                 else:
-                    new_property_text += f"{property_object.get_noofrooms()},{property_object.get_noofBathrooms()},{property_object.get_garage_space()},{property_object.pets_allowed()}\n"
+                    new_property_text += f"{property_object.get_noofRooms()},{property_object.get_noofBathrooms()},{property_object.get_garage_space()},{property_object.pets_allowed()}\n"
 
             file.write(new_property_text)
             print("Back up Successfully Created!")

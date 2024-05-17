@@ -86,7 +86,7 @@ class WholeRental(RentalProperty):
         self.petsAllowed: bool = petsAllowed
 
     # Getters
-    def get_noofrooms(self):
+    def get_noofRooms(self):
         # Get the number of rooms
         return self.noofRooms
     
@@ -103,7 +103,7 @@ class WholeRental(RentalProperty):
         return self.petsAllowed
 
     # Setters
-    def set_NoOfRooms(self, newNoOfRooms):
+    def set_noofRooms(self, newNoOfRooms):
         # Set the number of rooms
         self.noofRooms = newNoOfRooms
 
@@ -138,7 +138,6 @@ class RoomRental(RentalProperty):
     Version: 1.0
     """
 
-    
     #Constructor - Initialize specific attributes for room rental properties
     def __init__(self, rental_ID, address, weeklyPrice, furnished, description, couplesAllowed, attachedBathroom):
         super().__init__(rental_ID, address, weeklyPrice, furnished, description)
