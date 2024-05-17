@@ -302,7 +302,7 @@ Args:
 Returns:
     str 
 """
-\
+
 def checkRental_Type(search_ID: str) -> str:
 
     # Loops through the rental properties
