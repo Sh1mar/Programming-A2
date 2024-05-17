@@ -1,7 +1,9 @@
-# Setter, Getter, Constructor Deconstructor
 from abc import ABC, abstractmethod
 
-class RentalProperty:
+# Abstract base class for rental properties
+class RentalProperty(ABC):
+
+    # Constructor - Initialize common attributes for all rental properties
     def __init__(self, rental_ID, address, weeklyPrice, furnished, description):
         self.rental_ID: str = rental_ID
         self.address: str = address
@@ -9,45 +11,57 @@ class RentalProperty:
         self.furnished: bool = furnished
         self.description: str = description
 
-    # Setter Functions - Assume that RentalID cannot be changed after being set
-
-    def set_RentalID(self,newRentalID):
+    # Setter Functions
+    def set_RentalID(self, newRentalID):
+        # Set the rental ID
         self.rental_ID = newRentalID
 
     def set_Address(self, newAddress):
+        # Set the address
         self.address = newAddress
 
     def set_WeeklyPrice(self, newPrice):
+        # Set the weekly price
         self.weeklyPrice = newPrice
 
     def set_Furnished(self, newFurnished):
+        # Set whether the property is furnished
         self.furnished = newFurnished
 
     def set_Description(self, newDescription):
+        # Set the description
         self.description = newDescription
 
     # Getter Functions
     def get_Rental_ID(self):
+        # Get the rental ID
         return self.rental_ID
 
     def get_address(self):
+        # Get the address
         return self.address
 
     def get_weekly_price(self):
+        # Get the weekly price
         return self.weeklyPrice
 
     def get_furnished(self):
+        # Get whether the property is furnished
         return self.furnished
 
     def get_description(self):
+        # Get the description
         return self.description
 
-    # Display Rentals
+    # Abstract method to display rental details
     @abstractmethod
-    def displayRoom(self):
+    def displayRental(self):
         pass 
 
+# Class for whole rental properties
 class WholeRental(RentalProperty):
+
+    # Constructor - Initialize specific attributes for whole rental properties
     def __init__(self, rental_ID, address, weeklyPrice, furnished, description, noofRooms, garageSpace, petsAllowed):
         super().__init__(rental_ID, address, weeklyPrice, furnished, description)
         self.noofRooms: int = noofRooms
@@ -56,35 +70,44 @@ class WholeRental(RentalProperty):
 
     # Getters
     def get_noofrooms(self):
+        # Get the number of rooms
         return self.noofRooms
 
     def get_garage_space(self):
+        # Get the garage space
         return self.garageSpace
 
     def pets_allowed(self):
+        # Get whether pets are allowed
         return self.petsAllowed
 
     # Setters
-
     def set_NoOfRooms(self, newNoOfRooms):
+        # Set the number of rooms
         self.noofRooms = newNoOfRooms
 
     def set_garageSpace(self, newGaragespace):
+        # Set the garage space
         self.garageSpace = newGaragespace
 
     def set_Petsallowed(self, newPetsallowed):
+        # Set whether pets are allowed
         self.petsAllowed = newPetsallowed
 
-    # Displays Rentals
+    # Display details of the whole rental property
     def displayRental(self):
-        return f"Rental ID : {self.rental_ID} \nAddress :{self.address} \nWeeklyPrice : {self.weeklyPrice} \nFurnished : {self.furnished} \nDescription : {self.description} \nNumber of Rooms : {self.noofRooms} \nGarage Space : {self.garageSpace} \nPets Allowed : {self.petsAllowed} \n "
+        return (f"Rental ID : {self.rental_ID} \nAddress :{self.address} \nWeeklyPrice : {self.weeklyPrice} "
+                f"\nFurnished : {self.furnished} \nDescription : {self.description} \nNumber of Rooms : {self.noofRooms} "
+                f"\nGarage Space : {self.garageSpace} \nPets Allowed : {self.petsAllowed} \n ")
 
     # Destructor
     def __del__(self):
         print(f"Whole Rental : {self.rental_ID} Deleted \n")
 
-
+# Class for room rental properties
 class RoomRental(RentalProperty):
+    
+    #Constructor - Initialize specific attributes for room rental properties
     def __init__(self, rental_ID, address, weeklyPrice, furnished, description, couplesAllowed, attachedBathroom):
         super().__init__(rental_ID, address, weeklyPrice, furnished, description)
         self.couplesAllowed: bool = couplesAllowed
@@ -92,23 +115,28 @@ class RoomRental(RentalProperty):
 
     # Getters
     def get_couples_allowed(self):
+        # Get whether couples are allowed
         return self.couplesAllowed
 
     def get_attached_bathroom(self):
+        # Get whether there is an attached bathroom
         return self.attachedBathroom
 
     # Setters
     def set_Couplesallowed(self, newCouplesAllowed):
+        # Set whether couples are allowed
         self.couplesAllowed = newCouplesAllowed
 
     def set_Attachbathroom(self, newAttachBathrooms):
+        # Set whether there is an attached bathroom
         self.attachedBathroom = newAttachBathrooms
 
-    #Display Rentals 
+    # Display details of the room rental property
     def displayRental(self):
-        return f"Rental ID : {self.rental_ID} \nAddress :{self.address} \nWeeklyPrice : {self.weeklyPrice} \nFurnished : {self.furnished} \nDescription : {self.description} \nCouples Allowed : {self.couplesAllowed} \nAttached Bathroom : {self.attachedBathroom} \n "
+        return (f"Rental ID : {self.rental_ID} \nAddress :{self.address} \nWeeklyPrice : {self.weeklyPrice} "
+                f"\nFurnished : {self.furnished} \nDescription : {self.description} \nCouples Allowed : {self.couplesAllowed} "
+                f"\nAttached Bathroom : {self.attachedBathroom} \n ")
 
     # Destructor
     def __del__(self):
         print(f"Room Rental : {self.rental_ID} Deleted \n")
-

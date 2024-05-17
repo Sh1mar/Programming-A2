@@ -1,11 +1,5 @@
 from rentalClass import *
 
-"""
-TODO:
-
-Option to go back  
-"""
-
 rentalProperty_Objects = []
 
 """
@@ -23,42 +17,60 @@ Returns:
 """
 # MARK: Enter Retnals 
 def enterRentals(rentalType: int) -> None:  
-    rental_ID = input("Enter rental ID: ")
 
+    #Takes input for the data attributes common to both rental properties 
+    rental_ID = input("Enter rental ID: ")
     address = str(input("Enter address: "))
     weeklyPrice = float(input("Enter weekly price: "))
     furnished = input("Is the property furnished? (True/False): ").lower() == 'true'
     description = input("Enter property description: ").capitalize()
 
+    # Creates the Whole Rental Property 
+
     if rentalType == 1:
+
+        # Takes input for data attributes unique to whole rental properties
         noofRooms = int(input("Enter number of rooms: "))
         garageSpace = int(input("Enter garage space (if any): "))
         petsAllowed = input("Are pets allowed? (True/False): ").lower() == 'true'
-
+        
+        # Creates and Appends the Whole Rental Property to the rentelProperties Object
         rentalProperty_Objects.append(["WholeRental", WholeRental(rental_ID, address, weeklyPrice, furnished, description, noofRooms,
                                                    garageSpace, petsAllowed)])
 
     else:
+        # Takes input for data attributes unique to whole rental properties
+
         couplesAllowed = input("Are couples Allowed? (True/False): ").lower() == "true"
         attachedBathroom = input("Is there a Attached Bathroom? (True/False): ").lower() == "true"
 
+        # Creates and Appends the Whole Rental Property to the rentelProperties Object
         rentalProperty_Objects.append(["RoomRental", RoomRental(rental_ID, address, weeklyPrice, furnished, description,
                                                                 couplesAllowed, attachedBathroom)])
 
 """
 Purpose: 
-    -
+    - Takes the rental type as an argument
+    - Retreives the rental details based on the rentalType  
 
 Args:
-    rentalType : int - xyz
+    rentalType : int
 
 Returns:
-    str :  returns a string of rentalType class properties
+    str
 """
 # MARK: Retrieve Rentals 
 def retreiveRentals(rentalType: int) -> str:
-    rentalInfo = ""
+    rentalInfo : str = ""
+
+    # Loops through the rental properties Objects
     for rentals in rentalProperty_Objects:
+
+        #Validate the rental Type, in the following manner and adds the rentalType to rentalInfo string 
+            # [1] : WholeRental 
+            # [2] : RoomRental
+            # [3] : All Rentals
+        
         if rentalType == 1 and rentals[0] == "WholeRental":
             rentalInfo += rentals[1].displayRental() + "\n"
 
@@ -73,18 +85,35 @@ def retreiveRentals(rentalType: int) -> str:
 # MARK: Update Rentals
 """
 Purpose: 
-    -Edits/Updates Rental Properties Objects Accordindly and validates the Feild
+    - This function updates various fields of rental properties based on user input.
+    - It searches for the rental property using the provided rental type and ID. 
+    - Then updates the specified field with the new value entered by the user.
+
 Args:
-    rentalType : str  - 
-    rentalSearch_ID : int - 
-    feildChange : int -  
+    rentalType : str  
+    rentalSearch_ID : int  
+    feildChange : int 
 
 Returns:
     None
 """
 def updateRentals(rentalType: str, Rentalsearch_ID: int, feildChange: int) -> None:
+    
+    # Loops through the rental properties Objects
     for rentals in rentalProperty_Objects:
+
+        #Checks gets rental Property Objects id and checks with Rentalsearch_ID parameter and that Rental Type matches wtih the rental Type parameter
         if rentals[1].get_Rental_ID() == Rentalsearch_ID and rentals[0] == rentalType:
+            
+            #Checks the feildChange based on these criteria: 
+                # [1] Address
+                # [2] Weekly Price 
+                # [3] Furnshed(True/False) 
+                # [4] Description
+                # [5] Couples Allowed(True/False) 
+                # [6] Attached Bathrooms(True/False) 
+            # And based on the criteria(above) asks the user the new feilds and calls the setter function accordingly. 
+
             if feildChange == 1:
                 new_Address = str(input("Enter New Address: "))
                 rentals[1].set_Address(new_Address)
@@ -128,7 +157,10 @@ def updateRentals(rentalType: str, Rentalsearch_ID: int, feildChange: int) -> No
 # MARK: Delete Rentals
 """
 Purpose: 
-    -
+    - This function deletes a rental property from the list of rental properties.
+    - It searches for the rental property using the provided rental type and ID,
+    - Then removes the corresponding property from the list.
+
 Args:
     rentalID: int - 
     rentalType: str -  
@@ -137,16 +169,22 @@ Returns:
     None 
 """
 def deleteRentals(rentalID: int, rentalType: str) -> None:
+
+    # Loops through the index of of rental Property Objects
     for index in range(len(rentalProperty_Objects)):
+        
+        #Checks if the rental Type is the same as the rental class type in the list and that that rentalID of the rental Object is the same as the rental id parameter
         if rentalProperty_Objects[index][0] == rentalType and rentalProperty_Objects[index][
             1].get_Rental_ID() == rentalID:
+
+            # If that is the case pops the rental object from the list, therefore deleting it
             rentalProperty_Objects.pop(index)
 
 # MARK: Load Back Up
 """
 Purpose: 
-    -Load existing data from text file, makes rental property objects and appends then to the list
-
+    - Load existing rental property data from a text file, create rental property objects.
+    - And append them to the rental properties list if they do not already exist.
 Args: 
     None
 
@@ -154,19 +192,20 @@ Returns:
     None 
 """
 def loadRentals():
+  
     try: 
 
-        file = open("Programming-A2/rentalProperties.txt", "r")
+        #Open the rentalProperties.txt file as read 
+        file = open("rentalProperties.txt", "r")
 
         lines = file.readlines()
 
+        # Loops through every line in lines, one by one
         for line in lines:
             line = line.replace("\n", "")
 
             rental_data = line.split(",")
             rental_ID = rental_data[0]
-
-            # print(rental_data,len(rental_data))
 
             # Adds the property from the text file to the objects list by creating an oject ONLY if it doesnt already exist
             if not(validateRental(rental_ID)):
@@ -180,6 +219,7 @@ def loadRentals():
                     rental_ID, address, weeklyPrice, furnished, description, couplesAllowed, attachedBathroom = rental_data
                     rentalProperty_Objects.append(["RoomRental", RoomRental(rental_ID, address, weeklyPrice, furnished, description, couplesAllowed, attachedBathroom)])
         file.close()
+   
     except FileNotFoundError as fnfe: 
         print(f"File not found! {fnfe}")
     except Exception as e:
@@ -189,7 +229,9 @@ def loadRentals():
 # MARK: Back Up
 """
 Purpose: 
-    -Load existing data from text file, makes rental property objects and appends then to the list
+    -  Back up current rental property data to a text file.
+     - It writes all rental properties from the rental properties list to the file,
+     - Including their details, in a specific format, depending on the type of rental class
 
 Args: 
     None
@@ -200,14 +242,18 @@ Returns:
 def backupRentals():
     try: 
 
+        #Open the rentalProperties.txt file as write 
         file = open("Programming-A2/rentalProperties.txt", "w")
         new_property_text = ""
 
+        # Loops through properties in rental Object 
         for property in rentalProperty_Objects:
             property_type, property_object = property
 
+            # Uses reach rental class getters and adds to the new_property_text
             new_property_text += f"{property_object.get_Rental_ID()},{property_object.get_address()},{property_object.get_weekly_price()},{property_object.get_furnished()},{property_object.get_description()},"
 
+            # Checks the property_type and accordingly adds to the new property_text based on the rental type
             if property_type == "RoomRental":
                 new_property_text += f"{property_object.get_couples_allowed()},{property_object.get_attached_bathroom()}\n"
             else:
@@ -215,7 +261,7 @@ def backupRentals():
 
         file.write(new_property_text)
         file.close()
-        
+
     except FileNotFoundError as fnfe: 
         print(f"File not found! {fnfe}")
     except Exception as e:
@@ -224,15 +270,20 @@ def backupRentals():
 # MARK: Utility Functions 
 """
 Purpose: 
-    -
+    -Validate if a rental property with the given ID already exists in the rental properties list.
+
 Args:
     search_ID : str 
 
 Returns:
-    bool:   xyz
+    bool 
 """
+
 def validateRental(search_ID: str) -> int:
+    # Loops through the index of  rental Property Objects 
     for index in range(len(rentalProperty_Objects)):
+        
+        # Validates the search_ID and checks wheater it exists in the Rental Objects list
         if search_ID == rentalProperty_Objects[index][1].get_Rental_ID():
             return True
 
@@ -240,25 +291,30 @@ def validateRental(search_ID: str) -> int:
 
 """
 Purpose: 
-    -Validates user Rental_ID when editing and updating properties
+    - Validates user Rental_ID when editing and updating properties
 
 Args:
     rentalType : accepts a integer value 
 
 Returns:
-    str :   returns a string of rentalType class properties
-
+    str 
 """
-# Checks the Type of Rental Property input by the user
+\
 def checkRental_Type(search_ID: str) -> str:
+
+    # Loops through the rental properties
     for [rental_type, property_object] in rentalProperty_Objects:
+        
         rental_ID = property_object.get_Rental_ID()
+
+        # Checks if the current rental ID matches the search ID
         if rental_ID == search_ID:
+            # Returns the rental type if a match is found
             return rental_type
 
 """
 Purpose: 
-    -
+    - Check for duplicate rental properties by their ID in the rental properties list.
 Args: 
     None
 
@@ -267,46 +323,24 @@ Returns:
 """
 def checkDuplicateRentals() -> bool:
     
+    # Loop through each rental property by index
     for index_i in range(len(rentalProperty_Objects)):
+        # Nested loop to compare each rental property with every other rental property
         for index_j in range(len(rentalProperty_Objects)):
+
+            # Check if the rental IDs are the same and the indices are different
             if rentalProperty_Objects[index_i][1].get_Rental_ID() == rentalProperty_Objects[index_j][1].get_Rental_ID() and index_i != index_j:
+                 
+                 # Return the index of the second occurrence of the duplicated Rental ID
                 return index_j
-
-#Test Cases Delete during Submission
-def Testcases():
-    # Test Cases
-
-    # Create an instance of WholeRental
-    whole_rental = WholeRental(
-        rental_ID="WR001",
-        address="123 Main St",
-        weeklyPrice=500.0,
-        furnished=True,
-        description="A spacious whole rental",
-        noofRooms=3,
-        garageSpace=2,
-        petsAllowed=True
-    )
-
-    # Create an instance of RoomRental
-    room_rental = RoomRental(
-        rental_ID="RR001",
-        address="456 Elm St",
-        weeklyPrice=300.0,
-        furnished=False,
-        description="A cozy room rental",
-        couplesAllowed=True,
-        attachedBathroom=True
-    )
-
-    rentalProperty_Objects.append(["WholeRental", whole_rental])
-    rentalProperty_Objects.append(["RoomRental", room_rental])
-
 
 # MARK: Main
 """
 Purpose: 
-    -
+    - Main function to handle the user interface and control flow of the rental property management system.
+    - It loads existing rentals, displays a menu for various operations, and processes user inputs
+    - For creating, retrieving, updating, deleting, loading backups and backing up current rental properties.
+
 Args: 
     None
 
@@ -314,12 +348,9 @@ Returns:
     None 
 """
 def main():
-    #Testcases()
- 
+    # Loads Existing rental properties from the "rentalProperties.txt" to the rentalObjects
     loadRentals()
     print(" \nLoading Rentals from your last sessions Press [5] to display existing Rental Properties \n")
-    print(rentalProperty_Objects)
-
 
     while True:
     
@@ -364,14 +395,19 @@ def main():
 
             # Retrieve details of Rental Properties
             case 2:
-
+                
+                # Checks wheater rental Objects List  exist
                 if len(rentalProperty_Objects) == 0:
                     print("No Rental Propertires Created! \nPlease Enter Rental Property Details")
                 else:
                     while True:
                         print("[1]Whole Rental Property \n[2]Room Rental Property\n[3]All Rental Properties \n")
+                        #Gets the user input for the type of rental property to retrieve
                         rentalType = int(input("Enter the Type of Rentals do be Retreived:"))
+                        
+                        # Validatas the rental type input
                         if rentalType == 1 or rentalType == 2 or rentalType == 3:
+                            # Calls and Prints the retreiveRentals function 
                             print(retreiveRentals(rentalType))
                             break
                         else:
@@ -429,7 +465,8 @@ def main():
                     updateRentals(rentalType, searchRental, feildChange)
 
                     print(f"{rentalType} with ID: {searchRental} has been successfully updated!")
-
+            
+            #Deletes Rental Properties 
             case 4:
 
                 # Checks wheater Rental Objects exist
@@ -461,22 +498,31 @@ def main():
                     deleteRentals(searchRental, rentalType)
                     print(f"{rentalType} with ID: {searchRental} has been successfully Deleted!")
 
+            #Displays all Avalaible Rental Properties 
             case 5:
+                # Checks wheater Rental Objects exist
 
                 if len(rentalProperty_Objects) == 0:
                     print("No Rental Propertires Created! \nPlease Enter Rental Property Details")
                 else:
+                    # Calls and prints the retrieveRental function for all rental properties in the rental objects list 
                     print(retreiveRentals(3))
 
+            # Backs up the existing Rental Properties in the Rental Objects 
             case 6:
+                #Simply Backs up Rentals
                 print("Backing Up Rentals...")
                 backupRentals()
                 print("Back up Successfully Created!")
 
+            # Quits the application
             case 7:
                 while True:
-                    validatExit = str(input("Do you want to exit this application? (y/n):")).lower()
-                    if validatExit == "y" or validatExit == "q":
+                    # Rechechs with the user if they are sure they want to exit the application
+                    validate_Exit = str(input("Do you want to exit this application? (y/n):")).lower()
+                    
+                    # validates the validate_exit input
+                    if validate_Exit == "y" or validate_Exit == "q":
                         exit()
                     else:
                         print("Invalid Input! Please Try again")
@@ -484,5 +530,6 @@ def main():
             case _:
                 print("Invalid action, try again.")
 
+# Run the main function
 if __name__ == "__main__":
     main()
