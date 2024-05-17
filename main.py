@@ -475,7 +475,7 @@ def main():
                                 print(f"The option {feildChange} is not a valid,Try Again!")
 
                         except ValueError:
-                            print("Invalid input! Please enter a valid integer.")
+                            print("Invalid input! Please enter valid input.")
 
                     # Updates the Rental Object accordingly
                     updateRentals(rentalType, searchRental, feildChange)
