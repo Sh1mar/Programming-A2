@@ -192,9 +192,8 @@ Returns:
     None 
 """
 def loadRentals():
-  
-    try: 
 
+    try: 
         #Open the rentalProperties.txt file as read 
         file = open("rentalProperties.txt", "r")
 
@@ -219,7 +218,7 @@ def loadRentals():
                     rental_ID, address, weeklyPrice, furnished, description, couplesAllowed, attachedBathroom = rental_data
                     rentalProperty_Objects.append(["RoomRental", RoomRental(rental_ID, address, weeklyPrice, furnished, description, couplesAllowed, attachedBathroom)])
         file.close()
-   
+
     except FileNotFoundError as fnfe: 
         print(f"File not found! {fnfe}")
     except Exception as e:
@@ -240,32 +239,36 @@ Returns:
     None 
 """
 def backupRentals():
-    try: 
+    if len(rentalProperty_Objects) == 0:
+        print(f"{len(rentalProperty_Objects)} Rentals Properties to be backed up, please create Rental Properties")
+    
+    else: 
+        try: 
+            #Open the rentalProperties.txt file as write 
+            file = open("rentalProperties.txt", "w")
+            new_property_text = ""
 
-        #Open the rentalProperties.txt file as write 
-        file = open("Programming-A2/rentalProperties.txt", "w")
-        new_property_text = ""
+            # Loops through properties in rental Object 
+            for property in rentalProperty_Objects:
+                property_type, property_object = property
 
-        # Loops through properties in rental Object 
-        for property in rentalProperty_Objects:
-            property_type, property_object = property
+                # Uses reach rental class getters and adds to the new_property_text
+                new_property_text += f"{property_object.get_Rental_ID()},{property_object.get_address()},{property_object.get_weekly_price()},{property_object.get_furnished()},{property_object.get_description()},"
 
-            # Uses reach rental class getters and adds to the new_property_text
-            new_property_text += f"{property_object.get_Rental_ID()},{property_object.get_address()},{property_object.get_weekly_price()},{property_object.get_furnished()},{property_object.get_description()},"
+                # Checks the property_type and accordingly adds to the new property_text based on the rental type
+                if property_type == "RoomRental":
+                    new_property_text += f"{property_object.get_couples_allowed()},{property_object.get_attached_bathroom()}\n"
+                else:
+                    new_property_text += f"{property_object.get_noofrooms()},{property_object.get_garage_space()},{property_object.pets_allowed()}\n"
 
-            # Checks the property_type and accordingly adds to the new property_text based on the rental type
-            if property_type == "RoomRental":
-                new_property_text += f"{property_object.get_couples_allowed()},{property_object.get_attached_bathroom()}\n"
-            else:
-                new_property_text += f"{property_object.get_noofrooms()},{property_object.get_garage_space()},{property_object.pets_allowed()}\n"
+            file.write(new_property_text)
+            print("Back up Successfully Created!")
+            file.close()
 
-        file.write(new_property_text)
-        file.close()
-
-    except FileNotFoundError as fnfe: 
-        print(f"File not found! {fnfe}")
-    except Exception as e:
-        print("Unkown exception occured!")
+        except FileNotFoundError as fnfe: 
+            print(f"File not found! {fnfe}")
+        except Exception as e:
+            print("Unkown exception occured!")
 
 # MARK: Utility Functions 
 """
@@ -350,7 +353,7 @@ Returns:
 def main():
     # Loads Existing rental properties from the "rentalProperties.txt" to the rentalObjects
     loadRentals()
-    print(" \nLoading Rentals from your last sessions Press [5] to display existing Rental Properties \n")
+    print(" \nLoading Rentals from your last sessions Press [5] to display loaded Rental Properties \n")
 
     while True:
     
@@ -446,7 +449,7 @@ def main():
 
                     if rentalType == "WholeRental":
                         print("[5] Number of Rooms\n[6] GarageSpace(if any)\n[7] Pets Allowed \n")
-                    else:
+                    else: # Rental Type is RoomRental
                         print("[5] Couples Allowed(True/False) \n[6] Attached Bathrooms(True/False) \n")
 
                     while True:
@@ -485,8 +488,7 @@ def main():
                     # User input to determine what type of property is to be edited/updated
                     while True:
                         searchRental = input("Enter the Rental_ID: ")
-                        if validateRental(searchRental) == True and searchRental[1] == "R" and (
-                                searchRental[0] == "W" or searchRental[0] == "R"):
+                        if validateRental(searchRental) == True:
                             break
                         else:
                             print("Invalid Input Please Try Again!")
@@ -513,7 +515,6 @@ def main():
                 #Simply Backs up Rentals
                 print("Backing Up Rentals...")
                 backupRentals()
-                print("Back up Successfully Created!")
 
             # Quits the application
             case 7:

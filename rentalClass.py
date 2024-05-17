@@ -3,6 +3,14 @@ from abc import ABC, abstractmethod
 # Abstract base class for rental properties
 class RentalProperty(ABC):
 
+    """
+    This abstract class represents a generic rental property.
+    It serves as a template for whole and room rental properties(Parent Class).
+    Author: Shimar Yasin Khan
+    Date: 17/5/2024
+    Version: 1.0
+    """
+
     # Constructor - Initialize common attributes for all rental properties
     def __init__(self, rental_ID, address, weeklyPrice, furnished, description):
         self.rental_ID: str = rental_ID
@@ -61,6 +69,14 @@ class RentalProperty(ABC):
 # Class for whole rental properties
 class WholeRental(RentalProperty):
 
+    """
+    This class represents a whole rental property.
+    It extends the RentalProperty class(Child Class) and adds specific attributes for whole rentals.
+    Author: Shimar Yasin Khan
+    Date: 17/5/2024
+    Version: 1.0
+    """
+
     # Constructor - Initialize specific attributes for whole rental properties
     def __init__(self, rental_ID, address, weeklyPrice, furnished, description, noofRooms, garageSpace, petsAllowed):
         super().__init__(rental_ID, address, weeklyPrice, furnished, description)
@@ -106,6 +122,15 @@ class WholeRental(RentalProperty):
 
 # Class for room rental properties
 class RoomRental(RentalProperty):
+
+    """
+    This class represents a room rental property.
+    It extends the RentalProperty class(Child class) and adds specific attributes for room rentals.
+    Author: Shimar Yasin Khan
+    Date: 17/5/2024
+    Version: 1.0
+    """
+
     
     #Constructor - Initialize specific attributes for room rental properties
     def __init__(self, rental_ID, address, weeklyPrice, furnished, description, couplesAllowed, attachedBathroom):
