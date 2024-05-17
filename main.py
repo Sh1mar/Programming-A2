@@ -118,8 +118,8 @@ def updateRentals(rentalType: str, Rentalsearch_ID: int, feildChange: int) -> No
         #Checks gets rental Property Objects id and checks with Rentalsearch_ID parameter and that Rental Type matches wtih the rental Type parameter
         if rentals[1].get_Rental_ID() == Rentalsearch_ID and rentals[0] == rentalType:
             
-            #Checks the feildChange based on these criteria: 
-        #    MARK: ADD
+            #Checks the feildChange based on these criteria for Whole Rental Type Properties
+
             # And based on the criteria(above) asks the user the new feilds and calls the setter function accordingly. 
 
             if feildChange == 1:
