@@ -351,6 +351,7 @@ Returns:
     None 
 """
 def main():
+    
     # Loads Existing rental properties from the "rentalProperties.txt" to the rentalObjects
     loadRentals()
     print(" \nLoading Rentals from your last sessions Press [5] to display loaded Rental Properties \n")

@@ -4,8 +4,8 @@ from abc import ABC, abstractmethod
 class RentalProperty(ABC):
 
     """
-    This abstract class represents a generic rental property.
-    It serves as a template for whole and room rental properties(Parent Class).
+    This abstract class(Parent Class) represents a generic rental property with common data atrributes.
+    It serves as a template for whole and room rental properties.
     Author: Shimar Yasin Khan
     Date: 17/5/2024
     Version: 1.0
