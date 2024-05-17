@@ -78,9 +78,10 @@ class WholeRental(RentalProperty):
     """
 
     # Constructor - Initialize specific attributes for whole rental properties
-    def __init__(self, rental_ID, address, weeklyPrice, furnished, description, noofRooms, garageSpace, petsAllowed):
+    def __init__(self, rental_ID, address, weeklyPrice, furnished, description, noofRooms,noofBathrooms, garageSpace, petsAllowed):
         super().__init__(rental_ID, address, weeklyPrice, furnished, description)
         self.noofRooms: int = noofRooms
+        self.noofBathrooms : int = noofBathrooms
         self.garageSpace: int = garageSpace
         self.petsAllowed: bool = petsAllowed
 
@@ -88,7 +89,11 @@ class WholeRental(RentalProperty):
     def get_noofrooms(self):
         # Get the number of rooms
         return self.noofRooms
-
+    
+    def get_noofBathrooms(self):
+        # Get tje number of bathrooms
+        return self.noofBathrooms
+    
     def get_garage_space(self):
         # Get the garage space
         return self.garageSpace
@@ -102,6 +107,10 @@ class WholeRental(RentalProperty):
         # Set the number of rooms
         self.noofRooms = newNoOfRooms
 
+    def set_noofBathrooms(self, newnoofBathrooms):
+        # Set the number of bathrooms 
+        self.noofBathrooms = newnoofBathrooms
+
     def set_garageSpace(self, newGaragespace):
         # Set the garage space
         self.garageSpace = newGaragespace
@@ -112,9 +121,7 @@ class WholeRental(RentalProperty):
 
     # Display details of the whole rental property
     def displayRental(self):
-        return (f"Rental ID : {self.rental_ID} \nAddress :{self.address} \nWeeklyPrice : {self.weeklyPrice} "
-                f"\nFurnished : {self.furnished} \nDescription : {self.description} \nNumber of Rooms : {self.noofRooms} "
-                f"\nGarage Space : {self.garageSpace} \nPets Allowed : {self.petsAllowed} \n ")
+        return (f"Rental ID : {self.rental_ID} \nAddress :{self.address} \nWeeklyPrice : {self.weeklyPrice} \nFurnished : {self.furnished} \nDescription : {self.description} \nNumber of Rooms : {self.noofRooms} \nNumber of Bathrooms : {self.noofBathrooms}\nGarage Space : {self.garageSpace} \nPets Allowed : {self.petsAllowed} \n ")
 
     # Destructor
     def __del__(self):
@@ -158,9 +165,7 @@ class RoomRental(RentalProperty):
 
     # Display details of the room rental property
     def displayRental(self):
-        return (f"Rental ID : {self.rental_ID} \nAddress :{self.address} \nWeeklyPrice : {self.weeklyPrice} "
-                f"\nFurnished : {self.furnished} \nDescription : {self.description} \nCouples Allowed : {self.couplesAllowed} "
-                f"\nAttached Bathroom : {self.attachedBathroom} \n ")
+        return (f"Rental ID : {self.rental_ID} \nAddress :{self.address} \nWeeklyPrice : {self.weeklyPrice} \nFurnished : {self.furnished} \nDescription : {self.description} \nCouples Allowed : {self.couplesAllowed} \nAttached Bathroom : {self.attachedBathroom} \n ")
 
     # Destructor
     def __del__(self):

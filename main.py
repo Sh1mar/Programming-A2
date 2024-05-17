@@ -1,5 +1,17 @@
 from rentalClass import *
 
+"""
+
+Assignment 2
+
+Team Details: 
+Savin De Alwis, Student No: 35221631
+Januth Sumathiratne, Student No: 35221615
+Shimar Khan, Student No: 34715282
+Nishal Paranagama, Student No:34715231
+
+"""
+
 rentalProperty_Objects = []
 
 """
@@ -31,12 +43,13 @@ def enterRentals(rentalType: int) -> None:
 
         # Takes input for data attributes unique to whole rental properties
         noofRooms = int(input("Enter number of rooms: "))
+        noofBathrooms = int(input("Enter number of Bathrooms "))
         garageSpace = int(input("Enter garage space (if any): "))
         petsAllowed = input("Are pets allowed? (True/False): ").lower() == 'true'
         
         # Creates and Appends the Whole Rental Property to the rentelProperties Object
         rentalProperty_Objects.append(["WholeRental", WholeRental(rental_ID, address, weeklyPrice, furnished, description, noofRooms,
-                                                   garageSpace, petsAllowed)])
+                                                   noofBathrooms,garageSpace, petsAllowed)])
 
     else:
         # Takes input for data attributes unique to whole rental properties
@@ -106,12 +119,7 @@ def updateRentals(rentalType: str, Rentalsearch_ID: int, feildChange: int) -> No
         if rentals[1].get_Rental_ID() == Rentalsearch_ID and rentals[0] == rentalType:
             
             #Checks the feildChange based on these criteria: 
-                # [1] Address
-                # [2] Weekly Price 
-                # [3] Furnshed(True/False) 
-                # [4] Description
-                # [5] Couples Allowed(True/False) 
-                # [6] Attached Bathrooms(True/False) 
+        #    MARK: ADD
             # And based on the criteria(above) asks the user the new feilds and calls the setter function accordingly. 
 
             if feildChange == 1:
@@ -133,10 +141,18 @@ def updateRentals(rentalType: str, Rentalsearch_ID: int, feildChange: int) -> No
             elif feildChange == 5 and rentalType == "WholeRental":
                 new_NoofRooms = int(input("Enter number of rooms: "))
                 rentals[1].set_NoOfRooms(new_NoofRooms)
-
+            
             elif feildChange == 6 and rentalType == "WholeRental":
+                new_NoofBathrooms= int(input("Enter number of Bathrooms: "))
+                rentals[1].set_noofBathrooms(new_NoofBathrooms)
+            
+            elif feildChange == 7 and rentalType == "WholeRental":
                 new_GarageSpace = int(input("Enter garage space (if any): "))
                 rentals[1].set_garageSpace(new_GarageSpace)
+
+            elif feildChange == 8 and rentalType == "WholeRental":
+                new_PetsAllowed = input("Are pets allowed? (True/False): ").lower() == 'true'
+                rentals[1].set_Petsallowed(new_PetsAllowed)
 
             elif feildChange == 5 and rentalType == "RoomRental":
                 new_CouplesAllowed = input("Are couples Allowed? (True/False): ").lower() == "true"
@@ -146,9 +162,7 @@ def updateRentals(rentalType: str, Rentalsearch_ID: int, feildChange: int) -> No
                 new_AttachedBathroom = input("Is there a Attached Bathroom? (True/False): ").lower() == "true"
                 rentals[1].set_Attachbathroom(new_AttachedBathroom)
 
-            elif feildChange == 7:
-                new_PetsAllowed = input("Are pets allowed? (True/False): ").lower() == 'true'
-                rentals[1].set_Petsallowed(new_PetsAllowed)
+   
 
             else:
                 print("Uncaught Exception!")
@@ -210,9 +224,9 @@ def loadRentals():
             if not(validateRental(rental_ID)):
 
                 # Whole rental
-                if len(rental_data) == 8:
-                    rental_ID, address, weeklyPrice, furnished, description, noofRooms, garageSpace, petsAllowed = rental_data
-                    rentalProperty_Objects.append(["WholeRental", WholeRental(rental_ID, address, weeklyPrice, furnished, description, noofRooms, garageSpace, petsAllowed)])
+                if len(rental_data) == 9:
+                    rental_ID, address, weeklyPrice, furnished, description, noofRooms,noofBathrooms, garageSpace, petsAllowed = rental_data
+                    rentalProperty_Objects.append(["WholeRental", WholeRental(rental_ID, address, weeklyPrice, furnished, description, noofRooms,noofBathrooms, garageSpace, petsAllowed)])
                 # Room rental
                 else:
                     rental_ID, address, weeklyPrice, furnished, description, couplesAllowed, attachedBathroom = rental_data
@@ -259,7 +273,7 @@ def backupRentals():
                 if property_type == "RoomRental":
                     new_property_text += f"{property_object.get_couples_allowed()},{property_object.get_attached_bathroom()}\n"
                 else:
-                    new_property_text += f"{property_object.get_noofrooms()},{property_object.get_garage_space()},{property_object.pets_allowed()}\n"
+                    new_property_text += f"{property_object.get_noofrooms()},{property_object.get_noofBathrooms()},{property_object.get_garage_space()},{property_object.pets_allowed()}\n"
 
             file.write(new_property_text)
             print("Back up Successfully Created!")
@@ -449,7 +463,7 @@ def main():
                     print("[1] Address\n[2] Weekly Price \n[3] Furnshed(True/False) \n[4] Description")
 
                     if rentalType == "WholeRental":
-                        print("[5] Number of Rooms\n[6] GarageSpace(if any)\n[7] Pets Allowed \n")
+                        print("[5] Number of Rooms\n[6] Number of Bathrooms \n[7] GarageSpace(if any)\n[8] Pets Allowed \n")
                     else: # Rental Type is RoomRental
                         print("[5] Couples Allowed(True/False) \n[6] Attached Bathrooms(True/False) \n")
 
@@ -457,7 +471,7 @@ def main():
                         try:
                             feildChange = int(input("Enter which Rental Feild is to be changed:"))
 
-                            if feildChange in [1, 2, 3, 4, 5, 6, 7] and type(feildChange) == int:
+                            if feildChange in [1, 2, 3, 4, 5, 6, 7, 8] and type(feildChange) == int:
                                 break
                             else:
                                 print(f"The option {feildChange} is not a valid,Try Again!")
