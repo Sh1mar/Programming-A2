@@ -162,8 +162,6 @@ def updateRentals(rentalType: str, Rentalsearch_ID: int, feildChange: int) -> No
                 new_AttachedBathroom = input("Is there a Attached Bathroom? (True/False): ").lower() == "true"
                 rentals[1].set_Attachbathroom(new_AttachedBathroom)
 
-   
-
             else:
                 print("Uncaught Exception!")
 
